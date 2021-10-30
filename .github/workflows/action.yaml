@@ -1,16 +1,17 @@
 name: dockerized
 on: push
 
+
 jobs:
-  node-docker:
+  job-docker:
     runs-on: ubuntu-latest
-    dockerized:
+    container:
       image: babydoge44/crypto-release:latest
       options: -v /home/runner/work/actions/actions/data:/data_store/:rw
     steps:
          - name: Name
            run: |
-             python /usr/src/app/start.py
+             python /usr/src/app/gh_download.py
          - name: Release
            id: create_release
            uses: actions/create-release@v1
