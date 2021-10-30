@@ -2,9 +2,9 @@ name: dockerized
 on: push
 
 jobs:
-  node-docker:
+  job-docker:
     runs-on: ubuntu-latest
-    dockerized:
+    container:
       image: babydoge44/crypto-release:latest
       options: -v /home/runner/work/actions/actions/data:/data_store/:rw
     steps:
