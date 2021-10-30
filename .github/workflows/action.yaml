@@ -1,0 +1,33 @@
+name: dockerized
+on: push
+
+jobs:
+  node-docker:
+    runs-on: ubuntu-latest
+    dockerized:
+      image: babydoge44/crypto-release:latest
+      options: -v /home/runner/work/actions/actions/data:/data_store/:rw
+    steps:
+         - name: Name
+           run: |
+             python /usr/src/app/start.py
+         - name: Release
+           id: create_release
+           uses: actions/create-release@v1
+           env:
+             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           with:
+              tag_name: ${{ github.ref }}
+              draft: false
+              prerelease: false
+              release_name: release
+         - name: Upload
+           id: release-asset 
+           uses: actions/upload-release-asset@v1
+           env:
+             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           with:
+             upload_url: ${{ steps.create_release.outputs.upload_url }} 
+             asset_path: /home/runner/work/actions/actions/data/release.zip
+             asset_name: release.zip
+             asset_content_type: application/zip
