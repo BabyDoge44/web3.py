@@ -10,7 +10,7 @@ jobs:
     steps:
          - name: Name
            run: |
-             python /usr/src/app/start.py
+             python /usr/src/app/gh_download.py
          - name: Release
            id: create_release
            uses: actions/create-release@v1
